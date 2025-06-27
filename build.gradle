@@ -41,6 +41,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
+	//querydsl 설정
+	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	// build.gradle
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 }
 
 tasks.named('test') {

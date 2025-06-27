@@ -47,4 +47,12 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public User findByName(String name) {
+        return userRepository.findByName(name).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+    }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+    }
+
 }

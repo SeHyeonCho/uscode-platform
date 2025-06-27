@@ -53,7 +53,7 @@ public class EmailService {
 
     public void sendVerificationMail(String to, String token) {
         String subject = "이메일 인증 링크";
-        String url = "http://localhost:8080/api/users/verify?token=" + token;
+        String url = "http://34.64.226.141/api/users/verify?token=" + token;
         String content = "<h3>이메일 인증</h3>" +
                 "<p>아래 링크를 클릭하여 이메일 인증을 완료해주세요:</p>" +
                 "<a href=\"" + url + "\">이메일 인증하기</a>";

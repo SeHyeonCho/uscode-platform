@@ -13,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +23,7 @@ public class UserController {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+
     @PostMapping("/register")
     public UserCreateResponseDto register(@RequestBody UserCreateDto dto) {
         UserCreateResponseDto register = userService.register(dto);
@@ -35,7 +34,7 @@ public class UserController {
     public ResponseEntity<String> verifyUser(@RequestParam String token) {
         boolean flag = emailService.verifyToken(token);
         log.info("이메일 인증 로직 실행 [token:{}]", token);
-        if(flag) {
+        if (flag) {
             log.info("이메일 인증 로직 성공 [token:{}]", token);
             return ResponseEntity.ok("이메일 인증 완료");
 
@@ -46,17 +45,15 @@ public class UserController {
         }
     }
 
-
-    @PostMapping("login")
+    @PostMapping("/login")
     public UserLoginResponseDto login(@RequestBody UserLoginDto dto) {
-            User user = userService.findByEmail(dto.getEmail()).orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
-            if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-                throw new RuntimeException("비밀번호 불일치");
-            }
+        User user = userService.findByEmail(dto.getEmail()).orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new RuntimeException("비밀번호 불일치");
+        }
 
-            String accessToken = jwtTokenProvider.createAccessToken(user.getId());
-            return new UserLoginResponseDto(accessToken);
+        String accessToken = jwtTokenProvider.createAccessToken(user.getId(), user.getRole());
+        return new UserLoginResponseDto(accessToken, user.getRole().name());
     }
-
 
 }

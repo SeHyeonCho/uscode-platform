@@ -22,8 +22,12 @@ public class User {
     private boolean validate;
 
     private String name;
+    private String number;
     private String email;
     private String password;
+    private String zip;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     private LocalDateTime localDateTime;
 
     @OneToMany(mappedBy = "user")
@@ -32,11 +36,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orderList = new ArrayList<>();
 
-    public static User of(String name, String email, String password) {
+    public static User of(String name, String email,String password) {
         User user = new User();
         user.name = name;
         user.email = email;
         user.password = password;
+        user.role = UserRole.ROLE_BUYER;
         return user;
     }
 

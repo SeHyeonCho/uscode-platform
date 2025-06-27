@@ -2,12 +2,15 @@ package com.uscode.platform.product;
 
 import com.uscode.platform.user.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
     @Id @GeneratedValue
@@ -27,6 +30,16 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
+    public static Product of(String imgUrl, String name, Long price, String description) {
+        Product product = new Product();
+        product.imgUrl = imgUrl;
+        product.name = name;
+        product.price = price;
+        product.description = description;
+        return product;
+    }
 
 
 
