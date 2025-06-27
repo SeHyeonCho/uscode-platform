@@ -1,6 +1,6 @@
 package com.uscode.platform.order;
 
-import com.uscode.platform.order.Repsitory.OrderRepository;
+import com.uscode.platform.order.repsitory.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

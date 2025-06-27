@@ -1,4 +1,4 @@
-package com.uscode.platform.order.Repsitory;
+package com.uscode.platform.order.repsitory;
 
 import com.uscode.platform.order.Order;
 

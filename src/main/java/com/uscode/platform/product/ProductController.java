@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final UserService userService;
+    private final ImageService imageService;
 
     @GetMapping
     public ProductListDto getProductList() {
@@ -28,11 +30,19 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProduct(@RequestBody ProductCreateDto dto) {
-        User user = userService.findById(dto.getUserId());
-        productService.save(Product.of(user, dto.getImgUrl(), dto.getName(), dto.getPrice(), dto.getContent()));
-        return ResponseEntity.ok("상품 등록 성공");
+    public ResponseEntity<String> createProduct(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("userId") Long userId,
+            @RequestPart("name") String name,
+            @RequestPart("price") Long price,
+            @RequestPart("description") String description
+    ) {
+        User user = userService.findById(userId);
+        String path = imageService.saveImage(image);
+        productService.save(Product.of(user, path, name, price, description));
+        return ResponseEntity.ok().build();
     }
+
 
     @GetMapping("/{productId}")
     public ProductDetailDto getProductDetail(@PathVariable Long productId) {

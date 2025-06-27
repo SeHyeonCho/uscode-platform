@@ -1,10 +1,8 @@
-package com.uscode.platform.order.Repsitory;
+package com.uscode.platform.order.repsitory;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.uscode.platform.order.Order;
-import com.uscode.platform.order.QOrder;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 

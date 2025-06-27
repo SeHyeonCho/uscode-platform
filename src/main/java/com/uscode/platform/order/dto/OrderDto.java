@@ -1,4 +1,4 @@
-package com.uscode.platform.order;
+package com.uscode.platform.order.dto;
 
 import lombok.Data;
 

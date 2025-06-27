@@ -1,5 +1,6 @@
-package com.uscode.platform.order;
+package com.uscode.platform.order.dto;
 
+import com.uscode.platform.order.Order;
 import lombok.Data;
 
 import java.util.List;
