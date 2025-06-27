@@ -1,0 +1,26 @@
+jwt:
+  token:
+    expiration:
+      access: 1800000    # 30?
+      refresh: 2419200000 # 4?
+
+  secret:
+    key: ${JWT_SECRET}
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/platform_db
+    username: user
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
