@@ -27,13 +27,14 @@ public class Product {
     private ProductGrade grade;
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
 
-    public static Product of(String imgUrl, String name, Long price, String description) {
+    public static Product of(User user, String imgUrl, String name, Long price, String description) {
         Product product = new Product();
+        product.user = user;
         product.imgUrl = imgUrl;
         product.name = name;
         product.price = price;

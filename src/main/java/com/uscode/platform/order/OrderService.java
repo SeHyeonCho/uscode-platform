@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public List<Order> getUserOrderList(Long userId) {
         return orderRepository.getOrderListByBuyerId(userId);

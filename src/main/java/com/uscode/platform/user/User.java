@@ -25,7 +25,7 @@ public class User {
     private String number;
     private String email;
     private String password;
-    private String zip;
+    private String address;
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private LocalDateTime localDateTime;
@@ -47,6 +47,16 @@ public class User {
 
     public void validateUser() {
         validate = true;
+    }
+
+    public void updateInfo(String name, String number, String address) {
+        this.name = name;
+        this.number = number;
+        this.address = address;
+    }
+
+    public void changeSeller() {
+        this.role = UserRole.ROLE_SELLER;
     }
 
 }

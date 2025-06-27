@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ProductCreateDto {
 
+    private Long userId;
     private String imgUrl;
     private String name;
     private Long price;

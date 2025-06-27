@@ -2,10 +2,7 @@ package com.uscode.platform.user;
 
 import com.uscode.platform.auth.JwtTokenProvider;
 import com.uscode.platform.email.EmailService;
-import com.uscode.platform.user.dto.UserCreateDto;
-import com.uscode.platform.user.dto.UserCreateResponseDto;
-import com.uscode.platform.user.dto.UserLoginDto;
-import com.uscode.platform.user.dto.UserLoginResponseDto;
+import com.uscode.platform.user.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -53,7 +50,20 @@ public class UserController {
         }
 
         String accessToken = jwtTokenProvider.createAccessToken(user.getId(), user.getRole());
-        return new UserLoginResponseDto(accessToken, user.getRole().name());
+        return new UserLoginResponseDto(accessToken, user.getRole().name(), user.getName());
+    }
+
+    @GetMapping("/{userId}")
+    public UserDetailDto getUserInfo(@PathVariable Long userId) {
+        User user = userService.findById(userId);
+        return new UserDetailDto(user);
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<String> updateUserInfo(@PathVariable Long userId, @RequestBody UserDetailDto dto) {
+        User user = userService.findById(userId);
+        user.updateInfo(dto.getName(), dto.getNumber(), dto.getAddress());
+        return ResponseEntity.ok("유저 정보 수정 완료");
     }
 
 }
