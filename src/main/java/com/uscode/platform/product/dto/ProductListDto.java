@@ -12,7 +12,7 @@ public class ProductListDto {
     List<ProductDto> productList;
 
     public ProductListDto(List<Product> productList) {
-        List<ProductDto> productDtoList = productList.stream().map(p -> new ProductDto(p.getId(), p.getImgUrl(), p.getUser().getName(), p.getName(), p.getPrice())).collect(Collectors.toList());
+       this.productList = productList.stream().map(p -> new ProductDto(p.getId(), p.getImgUrl(), p.getUser().getName(), p.getName(), p.getPrice())).collect(Collectors.toList());
     }
 
 

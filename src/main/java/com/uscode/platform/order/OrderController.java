@@ -30,7 +30,7 @@ public class OrderController {
     }
 
     //구매자 기준 조회
-    @GetMapping("{userId}")
+    @GetMapping("/buyer/{userId}")
     public OrderListDto getBuyerOrderList(@PathVariable Long userId) {
         List<Order> userOrderList = orderService.getUserOrderList(userId);
         return new OrderListDto(userOrderList);
@@ -39,13 +39,12 @@ public class OrderController {
 
     @PostMapping("/{orderId}")
     public ResponseEntity<Void> changeOrderStatus(@RequestBody OrderStatusDto dto) {
-        Order order = orderService.findById(dto.getOrderId());
-        order.changeState(dto.getStatus());
+        orderService.changeState(dto);
         return ResponseEntity.ok().build();
     }
 
     //판매자 기준 조회
-    @GetMapping("/{sellerId}")
+    @GetMapping("/seller/{sellerId}")
     public OrderListDto getSellerOrderList(@PathVariable Long sellerId) {
         List<Order> userOrderList = orderService.getSellerOrderList(sellerId);
         return new OrderListDto(userOrderList);

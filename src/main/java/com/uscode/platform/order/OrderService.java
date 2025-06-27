@@ -1,5 +1,6 @@
 package com.uscode.platform.order;
 
+import com.uscode.platform.order.dto.OrderStatusDto;
 import com.uscode.platform.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class OrderService {
 
     public void createOrder(Order order) {
         orderRepository.save(order);
+    }
+
+    public void changeState(OrderStatusDto dto) {
+        Order order = findById(dto.getOrderId());
+        order.changeState(dto.getStatus());
     }
 
 

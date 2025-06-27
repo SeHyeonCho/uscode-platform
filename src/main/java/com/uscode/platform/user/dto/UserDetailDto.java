@@ -9,6 +9,9 @@ public class UserDetailDto {
     private String number;
     private String address;
 
+    public UserDetailDto() {
+    }
+
     public UserDetailDto(User user) {
         this.name = user.getName();
         this.number = user.getNumber();

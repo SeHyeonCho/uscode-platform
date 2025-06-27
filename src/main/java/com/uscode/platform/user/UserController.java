@@ -61,8 +61,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     public ResponseEntity<String> updateUserInfo(@PathVariable Long userId, @RequestBody UserDetailDto dto) {
-        User user = userService.findById(userId);
-        user.updateInfo(dto.getName(), dto.getNumber(), dto.getAddress());
+        userService.updateUser(userId, dto);
         return ResponseEntity.ok("유저 정보 수정 완료");
     }
 

@@ -4,6 +4,7 @@ import com.uscode.platform.auth.JwtTokenProvider;
 import com.uscode.platform.email.EmailService;
 import com.uscode.platform.user.dto.UserCreateDto;
 import com.uscode.platform.user.dto.UserCreateResponseDto;
+import com.uscode.platform.user.dto.UserDetailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -53,6 +54,12 @@ public class UserService {
 
     public User findById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+    }
+
+    public User updateUser(Long userId, UserDetailDto dto) {
+        User user = findById(userId);
+        user.updateInfo(dto.getName(), dto.getNumber(), dto.getAddress());
+        return user;
     }
 
 }
