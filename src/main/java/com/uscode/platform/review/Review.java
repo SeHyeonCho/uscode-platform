@@ -1,27 +1,25 @@
-package com.uscode.platform.order;
+package com.uscode.platform.review;
 
 import com.uscode.platform.product.Product;
+import com.uscode.platform.user.User;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-public class OrderItem {
+public class Review {
 
     @Id @GeneratedValue
-    @Column(name = "order_item_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-
-    private int quantity;
-    private Long orderPrice;
-
-
-
-
+    private Long rating;
+    private String content;
+    private LocalDateTime created_at;
 }

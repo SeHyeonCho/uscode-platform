@@ -19,8 +19,6 @@ public class JwtTokenProvider {
     private final SecretKey secretKey;
     @Value("${jwt.token.expiration.access}")
     private Long accessTokenExpiration;
-    @Value("${jwt.token.expiration.refresh}")
-    private Long refreshTokenExpiration;
 
 
     /**
