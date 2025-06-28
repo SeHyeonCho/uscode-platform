@@ -11,7 +11,7 @@ public class ProductDetailDto {
     private String name;
     private Long price;
     private ProductGrade grade;
-    private String content;
+    private String description;
 
     public ProductDetailDto(Product product) {
         this.imgUrl = product.getImgUrl();
@@ -19,6 +19,6 @@ public class ProductDetailDto {
         this.name = product.getName();
         this.price = product.getPrice();
         this.grade = product.getGrade();
-        this.content = product.getDescription();
+        this.description = product.getDescription();
     }
 }

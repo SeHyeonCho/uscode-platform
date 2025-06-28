@@ -1,18 +1,19 @@
 package com.uscode.platform.product;
 
+import com.uscode.platform.ai.AiService;
+import com.uscode.platform.ai.dto.ImageGradeDto;
 import com.uscode.platform.product.dto.ProductCreateDto;
 import com.uscode.platform.product.dto.ProductDetailDto;
 import com.uscode.platform.product.dto.ProductListDto;
 import com.uscode.platform.user.User;
 import com.uscode.platform.user.UserService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,7 @@ public class ProductController {
     private final ProductService productService;
     private final UserService userService;
     private final ImageService imageService;
+    private final AiService aiService;
 
     @GetMapping
     public ProductListDto getProductList() {
@@ -32,10 +34,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProduct(@ModelAttribute @Valid ProductCreateDto dto) {
+    public ResponseEntity<String> createProduct(@ModelAttribute @Valid ProductCreateDto dto) throws IOException {
         User user = userService.findById(dto.getUserId());
         String path = imageService.saveImage(dto.getImage());
-        productService.save(Product.of(user, path, dto.getName(), dto.getPrice(), dto.getDescription()));
+        ImageGradeDto imageClassify = aiService.getImageClassify(dto.getImage());
+        ProductGrade grade = imageService.grading(imageClassify);
+        productService.save(Product.of(user, path, dto.getName(), dto.getPrice(), dto.getDescription(), grade));
         return ResponseEntity.ok().build();
     }
 
@@ -45,6 +49,4 @@ public class ProductController {
         Product product = productService.findById(productId);
         return new ProductDetailDto(product);
     }
-
-
 }

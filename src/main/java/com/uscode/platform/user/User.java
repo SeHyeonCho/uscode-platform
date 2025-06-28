@@ -28,7 +28,7 @@ public class User {
     private String address;
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
     private List<Product> productList = new ArrayList<>();

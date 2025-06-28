@@ -3,6 +3,7 @@ package com.uscode.platform;
 import com.uscode.platform.order.Order;
 import com.uscode.platform.order.OrderService;
 import com.uscode.platform.product.Product;
+import com.uscode.platform.product.ProductGrade;
 import com.uscode.platform.product.ProductService;
 import com.uscode.platform.user.User;
 import com.uscode.platform.user.UserService;
@@ -45,24 +46,24 @@ public class DbInit implements ApplicationRunner {
 
 
         Long productId1 = productService.save(Product.of(user1, url + "1" + ".jpg", "말자네 자두", 15000L, "제가.직접.키운자두.입니다.\n" +
-                "농사만.어언.27년이니.믿고드세오.^^\n"));
+                "농사만.어언.27년이니.믿고드세오.^^\n", ProductGrade.B));
 
         Product product1 = productService.findById(productId1);
 
         Long productId2 = productService.save(Product.of(user2, url + "2" + ".jpg", "의성 으뜸 마늘", 9500L, "손수 까서 드립니다.\n" +
                 "최상급 마늘만 취급합니다.\n" +
                 "믿고 사세요." +
-                "농사만.어언.27년이니.믿고드세오.^^\n"));
+                "농사만.어언.27년이니.믿고드세오.^^\n", ProductGrade.A));
 
         Product product2 = productService.findById(productId2);
 
         Long productId3 = productService.save(Product.of(user2, url + "3" + ".jpg", "강춘삼 마늘",
                 8900L, "평생을 마늘만 했습니다.\n" +
-                        "믿고 사가세요."));
+                        "믿고 사가세요.", ProductGrade.C));
 
         Long productId4 = productService.save(Product.of(user3, url + "4" + ".jpg", "진짜배기 의성 사과",
                 13000L, "저희는 농약 안쓰는 친환경 사과입니다.\n" +
-                        "깨끗하니 물로 살짝 행궈 그냥 드세요."));
+                        "깨끗하니 물로 살짝 행궈 그냥 드세요.", ProductGrade.D));
 
 
         orderService.createOrder(Order.of(product1, user4, 2, product1.getPrice() * 2, user4.getAddress()));
