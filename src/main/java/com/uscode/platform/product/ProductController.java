@@ -5,6 +5,7 @@ import com.uscode.platform.product.dto.ProductDetailDto;
 import com.uscode.platform.product.dto.ProductListDto;
 import com.uscode.platform.user.User;
 import com.uscode.platform.user.UserService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,16 +31,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProduct(
-            @RequestPart("image") MultipartFile image,
-            @RequestPart("userId") Long userId,
-            @RequestPart("name") String name,
-            @RequestPart("price") Long price,
-            @RequestPart("description") String description
-    ) {
-        User user = userService.findById(userId);
-        String path = imageService.saveImage(image);
-        productService.save(Product.of(user, path, name, price, description));
+    public ResponseEntity<String> createProduct(@ModelAttribute ProductCreateDto dto) {
+        User user = userService.findById(dto.getUserId());
+        String path = imageService.saveImage(dto.getImage());
+        productService.save(Product.of(user, path, dto.getName(), dto.getPrice(), dto.getDescription()));
         return ResponseEntity.ok().build();
     }
 

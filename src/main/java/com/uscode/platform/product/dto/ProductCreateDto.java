@@ -1,13 +1,14 @@
 package com.uscode.platform.product.dto;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class ProductCreateDto {
 
+    private MultipartFile image;
     private Long userId;
-    private String imgUrl;
     private String name;
     private Long price;
-    private String content;
+    private String description;
 }
