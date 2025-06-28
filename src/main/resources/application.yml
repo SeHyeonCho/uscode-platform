@@ -15,7 +15,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -35,6 +35,9 @@ spring:
        auth: true
        starttls:
          enable : true
+logging:
+  level:
+    org.hibernate.SQL: trace
 
 server:
   address: 0.0.0.0

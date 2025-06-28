@@ -50,7 +50,7 @@ public class UserController {
         }
 
         String accessToken = jwtTokenProvider.createAccessToken(user.getId(), user.getRole());
-        return new UserLoginResponseDto(accessToken, user.getRole().name(), user.getName());
+        return new UserLoginResponseDto(accessToken, user.getRole().name(), user.getName(), user.getId());
     }
 
     @GetMapping("/{userId}")

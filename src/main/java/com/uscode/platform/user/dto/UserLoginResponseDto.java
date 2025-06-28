@@ -9,4 +9,5 @@ public class UserLoginResponseDto {
     private String token;
     private String role;
     private String name;
+    private Long userId;
 }

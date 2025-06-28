@@ -18,7 +18,7 @@ public class ImageService {
 
         try {
             file.transferTo(dest);
-            return dir + filename;
+            return "/images/" + filename;
         } catch (IOException e) {
             throw new RuntimeException("이미지 저장 실패", e);
         }
