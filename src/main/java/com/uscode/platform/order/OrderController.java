@@ -7,6 +7,7 @@ import com.uscode.platform.product.Product;
 import com.uscode.platform.product.ProductService;
 import com.uscode.platform.user.User;
 import com.uscode.platform.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class OrderController {
     private final ProductService productService;
     private final UserService userService;
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody OrderCreateDto dto) {
+    public ResponseEntity<String> createOrder(@RequestBody @Valid OrderCreateDto dto) {
         Product product = productService.findById(dto.getProductId());
         User user = userService.findByName(dto.getUsername());
         orderService.createOrder(Order.of(product, user, dto.getQuantity(), dto.getTotalPrice(), dto.getAddress()));
@@ -38,7 +39,7 @@ public class OrderController {
     }
 
     @PostMapping("/{orderId}")
-    public ResponseEntity<Void> changeOrderStatus(@RequestBody OrderStatusDto dto) {
+    public ResponseEntity<Void> changeOrderStatus(@RequestBody @Valid OrderStatusDto dto) {
         orderService.changeState(dto);
         return ResponseEntity.ok().build();
     }

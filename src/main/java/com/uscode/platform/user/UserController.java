@@ -3,6 +3,7 @@ package com.uscode.platform.user;
 import com.uscode.platform.auth.JwtTokenProvider;
 import com.uscode.platform.email.EmailService;
 import com.uscode.platform.user.dto.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,8 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
-    public UserCreateResponseDto register(@RequestBody UserCreateDto dto) {
-        UserCreateResponseDto register = userService.register(dto);
-        return register;
+    public UserCreateResponseDto register(@RequestBody @Valid UserCreateDto dto) {
+        return userService.register(dto);
     }
 
     @GetMapping("/verify")
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UserLoginResponseDto login(@RequestBody UserLoginDto dto) {
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginDto dto) {
         User user = userService.findByEmail(dto.getEmail()).orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new RuntimeException("비밀번호 불일치");
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public ResponseEntity<String> updateUserInfo(@PathVariable Long userId, @RequestBody UserDetailDto dto) {
+    public ResponseEntity<String> updateUserInfo(@PathVariable Long userId, @RequestBody @Valid UserDetailDto dto) {
         userService.updateUser(userId, dto);
         return ResponseEntity.ok("유저 정보 수정 완료");
     }
