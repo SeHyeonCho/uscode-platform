@@ -57,6 +57,11 @@ JWT_SECRET=YOUR_SECRET_KEY
 
 ~~~yaml
 jwt:
-    secret: 
-        key: ${JWT_SECRET}
+  secret: 
+    key: ${JWT_SECRET}
 ~~~
+
+## 관련 리포지토리
+
+- [Frontend Repository](https://github.com/gwxodn020/US-Code)
+- [AI Server Repository](https://github.com/LifeIsMoment/agriculture-ai-project)

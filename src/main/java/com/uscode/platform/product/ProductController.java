@@ -9,13 +9,14 @@ import com.uscode.platform.user.User;
 import com.uscode.platform.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @RestController
 @Transactional
 @RequiredArgsConstructor
@@ -34,10 +35,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProduct(@ModelAttribute @Valid ProductCreateDto dto) throws IOException {
+    public ResponseEntity<String> createProduct(@ModelAttribute @Valid ProductCreateDto dto) {
         User user = userService.findById(dto.getUserId());
         String path = imageService.saveImage(dto.getImage());
-        ImageGradeDto imageClassify = aiService.getImageClassify(dto.getImage());
+        String filename = path.substring(8);
+        log.info("PATH = [{}]", path);
+        log.info("FILENAME = [{}]", filename);
+        ImageGradeDto imageClassify = aiService.getImageClassify(filename);
         ProductGrade grade = imageService.grading(imageClassify);
         productService.save(Product.of(user, path, dto.getName(), dto.getPrice(), dto.getDescription(), grade));
         return ResponseEntity.ok().build();
